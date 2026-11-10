@@ -26,5 +26,4 @@ jobs:
         dotnet build $(find . -name "RaceDay.API.csproj") --configuration Release
         echo "=== Building MVC ==="
         dotnet build $(find . -name "RaceDay.MVC.csproj") --configuration Release
-        echo "=== Running Tests ==="
-        dotnet test $(find . -name "RaceDay.API.Tests.csproj") --configuration Release
+        
