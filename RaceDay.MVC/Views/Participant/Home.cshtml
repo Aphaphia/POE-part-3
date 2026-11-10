@@ -1,0 +1,25 @@
+﻿@model List<RaceDay.MVC.Models.EventDto>
+@{
+	ViewData["Title"] = "Find Events";
+}
+<h2 class="mt-4">Upcoming Events</h2>
+@if (TempData["ErrorMessage"] != null)
+{
+	<div class="alert alert-danger mt-3">@TempData["ErrorMessage"]</div>
+}
+<div class="row mt-4">
+	@foreach (var ev in Model)
+	{
+		<div class="col-md-4 mb-4">
+			<div class="card shadow-sm h-100">
+				@if (!string.IsNullOrEmpty(ev.BannerUrl))
+				{
+					<img src="@ev.BannerUrl" class="card-img-top" style="height:150px; object-fit:cover;">
+				}
+				<div class="card-body">
+					<h5>@ev.EventName</h5><p class="text-muted">@ev.EventDate.ToString("dd MMM yyyy")</p>
+					<a asp-controller="Participant" asp-action="EventDetails" asp-route-id="@ev.EventID" class="btn btn-primary w-100">View & Enrol</a>			</div>
+				</div>
+			</div>
+		}
+	</div>

@@ -1,0 +1,26 @@
+﻿@model RaceDay.MVC.Models.EventDto
+@{
+	ViewData["Title"] = "Create Event";
+}
+<div class="row justify-content-center mt-4">
+	<div class="col-md-8">
+		<h2>Create Event</h2>
+		<div class="card shadow-sm mt-3">
+			<div class="card-body">
+				<form asp-action="CreateEvent" method="post" enctype="multipart/form-data">
+					<div class="mb-3"><label>Name</label><input asp-for="EventName" class="form-control" required /></div>
+					<div class="mb-3"><label>Description</label><textarea asp-for="Description" class="form-control"></textarea></div>
+					<div class="row mb-3">
+						<div class="col"><label>Date</label><input asp-for="EventDate" type="date" class="form-control" required /></div>
+						<div class="col"><label>Location</label><input asp-for="Location" class="form-control" required /></div>
+					</div>
+					<div class="row mb-3">
+						<div class="col"><label>Distance (km)</label><input asp-for="Distance" type="number" step="0.1" class="form-control" required /></div>
+						<div class="col"><label>Type</label><select asp-for="EventType" class="form-select"><option value="Run">Run</option><option value="Walk">Walk</option><option value="Cycle">Cycle</option></select></div>
+					</div>
+					<div class="mb-3"><label>Banner Image</label><input type="file" name="bannerFile" class="form-control" /></div>
+					<button type="submit" class="btn btn-primary w-100">Create</button>				</form>
+				</div>
+			</div>
+		</div>
+	</div>

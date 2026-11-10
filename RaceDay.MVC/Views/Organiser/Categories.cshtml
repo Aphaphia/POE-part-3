@@ -1,0 +1,30 @@
+﻿@model List<RaceDay.MVC.Models.CategoryDto>
+@{
+	ViewData["Title"] = "Categories";
+}
+<div class="d-flex justify-content-between mt-4"><h2>Categories</h2><a asp-action="Events" class="btn btn-secondary">Back</a></div>
+@if (TempData["SuccessMessage"] != null)
+{
+	<div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+}
+<div class="row mt-4">
+	<div class="col-md-7">
+		<ul class="list-group">
+			@foreach (var cat in Model)
+			{
+				<li class="list-group-item"><strong>@cat.CategoryName</strong> - @cat.Description</li>
+			}
+		</ul>
+	</div>
+	<div class="col-md-5">
+		<div class="card">
+			<div class="card-header">Add Category</div><div class="card-body">
+			<form asp-action="CreateCategory" method="post">
+				<input type="hidden" name="eventId" value="@ViewBag.EventId" />
+				<div class="mb-3"><label>Name</label><input type="text" name="categoryName" class="form-control" required /></div>
+				<div class="mb-3"><label>Description</label><input type="text" name="description" class="form-control" /></div>
+				<button type="submit" class="btn btn-primary w-100">Add</button>				</form>
+			</div>
+		</div>
+	</div>
+</div>

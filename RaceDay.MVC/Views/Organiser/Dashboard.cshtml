@@ -1,0 +1,21 @@
+﻿@model List<RaceDay.MVC.Models.EventDto>
+@{
+	ViewData["Title"] = "Dashboard";
+}
+<h2 class="mt-4">Organiser Dashboard</h2>
+<div class="row mt-4">
+	@foreach (var ev in Model)
+	{
+		<div class="col-md-4 mb-4">
+			<div class="card shadow-sm h-100">
+				@if (!string.IsNullOrEmpty(ev.BannerUrl))
+				{
+					<img src="@ev.BannerUrl" class="card-img-top" style="height: 150px; object-fit: cover;">
+				}
+				<div class="card-body">
+					<h5>@ev.EventName</h5><p class="text-muted">@ev.EventDate.ToString("dd MMM yyyy") | @ev.Location</p>
+					<a href="#" class="btn btn-primary w-100">Manage Event</a>			</div>
+				</div>
+			</div>
+		}
+	</div>

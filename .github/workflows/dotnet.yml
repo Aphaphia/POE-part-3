@@ -1,4 +1,4 @@
-name: RaceDay API CI
+name: RaceDay CI
 
 on:
   push:
@@ -10,27 +10,25 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: RaceDay.API
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Restore API
-        run: dotnet restore RaceDay.API.csproj
-
-      - name: Build API
-        run: dotnet build RaceDay.API.csproj --no-restore --configuration Release
-
-      - name: Restore Tests
-        run: dotnet restore ..\RaceDay.API.Tests\RaceDay.API.Tests.csproj 2>$null || dotnet restore ../RaceDay.API.Tests/RaceDay.API.Tests.csproj
-
-      - name: Test
-        run: dotnet test ../RaceDay.API.Tests/RaceDay.API.Tests.csproj --configuration Release --verbosity normal
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+        
+    - name: Restore API
+      run: dotnet restore RaceDay.API/RaceDay.API.csproj
+      
+    - name: Build API
+      run: dotnet build RaceDay.API/RaceDay.API.csproj --no-restore --configuration Release
+      
+    - name: Restore MVC
+      run: dotnet restore RaceDay.MVC/RaceDay.MVC.csproj
+      
+    - name: Build MVC
+      run: dotnet build RaceDay.MVC/RaceDay.MVC.csproj --no-restore --configuration Release
+      
+    - name: Test API
+      run: dotnet test RaceDay.API.Tests/RaceDay.API.Tests.csproj --no-build --configuration Release

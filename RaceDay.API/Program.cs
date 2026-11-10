@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using RaceDay.API.Data;
 using RaceDay.API.Services;
 using System.Reflection;
@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ---------- EF Core ----------
 builder.Services.AddDbContext<RaceDayDbContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("RaceDayDb")));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // ---------- Services ----------
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
@@ -20,7 +20,7 @@ builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-// ---------- Session (Option C, server-side state) ----------
+// ---------- Session ----------
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(opt =>
 {
@@ -73,21 +73,6 @@ builder.Services.AddSwaggerGen(c =>
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
         Description = "Paste the JWT returned from /api/auth/login"
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
     });
 });
 

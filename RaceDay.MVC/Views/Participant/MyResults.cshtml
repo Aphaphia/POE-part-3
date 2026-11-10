@@ -1,0 +1,33 @@
+﻿@model List<RaceDay.MVC.Models.ResultDto>
+@{ ViewData["Title"] = "My Results"; }
+
+<h2 class="mt-4">My Race Results</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info mt-4">You haven't completed any races yet.</div>
+}
+else
+{
+    <table class="table table-hover mt-4 shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Finish Time</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var res in Model)
+            {
+                <tr>
+                    <td>@res.EventName</td>
+                    <td>@res.EventDate.ToString("dd MMM yyyy")</td>
+                    <td>@res.FinishTime</td>
+                    <td>@res.Position</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

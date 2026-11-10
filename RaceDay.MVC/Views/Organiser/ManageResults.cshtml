@@ -1,0 +1,32 @@
+﻿@model List<RaceDay.MVC.Models.EnrollmentDto>
+@{
+	ViewData["Title"] = "Results";
+}
+<div class="d-flex justify-content-between mt-4"><h2>Results</h2><a asp-action="Events" class="btn btn-secondary">Back</a></div>
+@if (TempData["SuccessMessage"] != null)
+{
+	<div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+}
+<table class="table mt-4">
+	<thead class="table-dark"><tr><th>UserID</th><th>Category</th><th>Status</th><th>Capture</th></tr></thead>
+	<tbody>
+		@foreach (var enr in Model)
+		{
+			<tr>
+				<td>@enr.UserID</td>
+				<td>@enr.CategoryName</td>
+				<td>@enr.Status</td>
+				<td>
+					@if (enr.Status == "Confirmed")
+					{
+						<form asp-action="CaptureResult" method="post" class="d-flex gap-2">
+							<input type="hidden" name="eventId" value="@ViewBag.EventId" /><input type="hidden" name="enrollmentId" value="@enr.EnrollmentID" />
+							<input type="text" name="finishTime" placeholder="00:45:00" class="form-control form-control-sm" required />
+							<input type="number" name="position" placeholder="Pos" class="form-control form-control-sm" required />
+							<button type="submit" class="btn btn-sm btn-success">Save</button>				</form>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>

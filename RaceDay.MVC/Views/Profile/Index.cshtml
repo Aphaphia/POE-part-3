@@ -1,0 +1,61 @@
+﻿@model RaceDay.MVC.Models.UserProfileDto
+@{ ViewData["Title"] = "My Profile"; }
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <h2>My Profile</h2>
+        
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+        }
+
+        <div class="card shadow-sm mt-3">
+            <div class="card-body text-center mb-3">
+                @if (!string.IsNullOrEmpty(Model.ProfilePictureUrl))
+                {
+                    <img src="@Model.ProfilePictureUrl" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile Picture" />
+                }
+                else
+                {
+                    <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px; font-size: 50px;">
+                        👤
+                    </div>
+                }
+            </div>
+            
+            <div class="card-body border-top">
+                <form asp-action="Update" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="UserID" />
+                    <input type="hidden" asp-for="ProfileID" />
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Date of Birth</label>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" required />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input asp-for="Phone" class="form-control" />
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">City</label>
+                        <input asp-for="City" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Update Profile Picture</label>
+                        <input type="file" name="profilePicture" class="form-control" accept="image/*" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Save Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

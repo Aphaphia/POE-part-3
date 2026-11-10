@@ -1,0 +1,29 @@
+﻿@model List<RaceDay.MVC.Models.EventDto>
+@{
+	ViewData["Title"] = "Manage Events";
+}
+<div class="d-flex justify-content-between mt-4"><h2>Manage Events</h2><a asp-action="CreateEvent" class="btn btn-success">+ Create Event</a></div>
+@if (TempData["SuccessMessage"] != null)
+{
+	<div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+	<div class="alert alert-danger mt-3">@TempData["ErrorMessage"]</div>
+}
+<table class="table table-hover mt-4 shadow-sm">
+	<thead class="table-dark"><tr><th>Name</th><th>Date</th><th>Type</th><th>Actions</th></tr></thead>
+	<tbody>
+		@foreach (var ev in Model)
+		{
+			<tr>
+				<td>@ev.EventName</td>
+				<td>@ev.EventDate.ToString("dd MMM yyyy")</td>
+				<td>@ev.EventType</td>
+				<td>
+					<a asp-action="Categories" asp-route-eventId="@ev.EventID" class="btn btn-sm btn-info text-white">Categories</a>
+					<a asp-action="ManageResults" asp-route-eventId="@ev.EventID" class="btn btn-sm btn-warning">Results</a>			</td>
+				</tr>
+			}
+		</tbody>
+	</table>
