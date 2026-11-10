@@ -16,19 +16,15 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '10.0.x' 
+        dotnet-version: '10.0.x'
         
-    - name: Restore API
-      run: dotnet restore "RaceDay/RaceDay.API/RaceDay.API.csproj"
-      
-    - name: Build API
-      run: dotnet build "RaceDay/RaceDay.API/RaceDay.API.csproj" --no-restore --configuration Release
-      
-    - name: Restore MVC
-      run: dotnet restore "RaceDay/RaceDay.MVC/RaceDay.MVC.csproj"
-      
-    - name: Build MVC
-      run: dotnet build "RaceDay/RaceDay.MVC/RaceDay.MVC.csproj" --no-restore --configuration Release
-      
-    - name: Test API
-      run: dotnet test "RaceDay/RaceDay.API.Tests/RaceDay.API.Tests.csproj" --no-build --configuration Release
+    - name: Find and Build Projects
+      run: |
+        echo "=== Looking for solution file ==="
+        find . -name "*.sln"
+        echo "=== Building API ==="
+        dotnet build $(find . -name "RaceDay.API.csproj") --configuration Release
+        echo "=== Building MVC ==="
+        dotnet build $(find . -name "RaceDay.MVC.csproj") --configuration Release
+        echo "=== Running Tests ==="
+        dotnet test $(find . -name "RaceDay.API.Tests.csproj") --configuration Release
